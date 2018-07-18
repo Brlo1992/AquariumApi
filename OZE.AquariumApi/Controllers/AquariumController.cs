@@ -33,5 +33,9 @@ namespace OZE.AquariumApi.Controllers
         [HttpGet]
         [Route("turnOffLedSet/{id}")]
         public async Task TurnOffLedSet(int id) => await aquariumHttpFactory.TurnOffLedSet(id);
+
+        [HttpGet]
+        [Route("getLedIds")]
+        public async Task<IEnumerable<int>> GetLedIds() => await aquariumHttpFactory.GetLedsIds();
     }
 }
