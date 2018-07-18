@@ -33,8 +33,8 @@ namespace OZE.AquariumApi.HttpFactories {
         public async Task TurnOff() => await Send("/turnOff");
         public async Task TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
         public async Task TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
-        public async Task<IEnumerable<int>> GetLedsIds() {
-            string content = await Send("/getLedIds");
+        public async Task<IEnumerable<int>> GetLedPins() {
+            string content = await Send("/getLedPins");
 
             var serializer = new JsonSerializer();
 
