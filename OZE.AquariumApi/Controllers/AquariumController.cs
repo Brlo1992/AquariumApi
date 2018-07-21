@@ -5,16 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OZE.AquariumApi.HttpFactories;
 
-namespace OZE.AquariumApi.Controllers
-{
+namespace OZE.AquariumApi.Controllers {
     [Route("api/aquarium")]
     [ApiController]
-    public class AquariumController : ControllerBase
-    {
+    public class AquariumController : ControllerBase {
         private readonly AquariumHttpFactory aquariumHttpFactory;
 
-        public AquariumController(AquariumHttpFactory aquariumHttpFactory)
-        {
+        public AquariumController(AquariumHttpFactory aquariumHttpFactory) {
             this.aquariumHttpFactory = aquariumHttpFactory;
         }
 
@@ -40,8 +37,8 @@ namespace OZE.AquariumApi.Controllers
 
         [HttpGet]
         [Route("getLedPins")]
-        public async Task<IEnumerable<int>> Test() => await Task.Run(() => {
-            return new List<int>() { 12, 13, 14 };
-        });
+        public IEnumerable<int> Test() =>
+             new List<int>() { 12, 13, 14 };
+
     }
 }
