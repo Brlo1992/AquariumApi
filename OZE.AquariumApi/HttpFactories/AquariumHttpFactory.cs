@@ -17,17 +17,19 @@ namespace OZE.AquariumApi.HttpFactories {
         }
 
         public async Task<Response> Send(string url) {
+            var response = new Response();
             try {
-                var response = await this.client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+                var result = await this.client.GetAsync(url);
+                result.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsStringAsync();
+                response.Content = await result.Content.ReadAsStringAsync();
             }
             catch (Exception ex) {
                 Debug.WriteLine(ex.Message);
+                response.AddError(ex.Message);
             }
 
-            return string.Empty;
+            return response;
         }
 
         public async Task TurnOn() => await Send("/turnOn");
