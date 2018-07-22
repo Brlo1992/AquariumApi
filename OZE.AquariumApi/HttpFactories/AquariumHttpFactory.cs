@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.HttpFactories {
     public class AquariumHttpFactory
@@ -15,7 +16,7 @@ namespace OZE.AquariumApi.HttpFactories {
             this.client = client;
         }
 
-        public async Task<string> Send(string url) {
+        public async Task<Response> Send(string url) {
             try {
                 var response = await this.client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
