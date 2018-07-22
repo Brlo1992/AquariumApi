@@ -16,8 +16,9 @@ namespace OZE.AquariumApi.HttpFactories {
             this.client = client;
         }
 
-        public async Task<Response> Send(string url) {
-            var response = new Response();
+        public async Task<Response<string>> Send(string url) {
+            var response = new Response<string>();
+
             try {
                 var result = await this.client.GetAsync(url);
                 result.EnsureSuccessStatusCode();
@@ -32,11 +33,11 @@ namespace OZE.AquariumApi.HttpFactories {
             return response;
         }
 
-        public async Task TurnOn() => await Send("/turnOn");
-        public async Task TurnOff() => await Send("/turnOff");
-        public async Task TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
-        public async Task TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
-        public async Task<IEnumerable<int>> GetLedPins() {
+        public async Task<Response> TurnOn() => await Send("/turnOn");
+        public async Task<Response> TurnOff() => await Send("/turnOff");
+        public async Task<Response> TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
+        public async Task<Response> TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
+        public async Task<Response<IEnumerable<int>>> GetLedPins() {
             string content = await Send("/getLedPins");
 
             var serializer = new JsonSerializer();
