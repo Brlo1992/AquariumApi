@@ -38,15 +38,24 @@ namespace OZE.AquariumApi.HttpFactories {
         public async Task<Response> TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
         public async Task<Response> TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
         public async Task<Response<IEnumerable<int>>> GetLedPins() {
-            string content = await Send("/getLedPins");
+            var result = await Send("/getLedPins");
+            var response = new Response<IEnumerable<int>>();
 
-            var serializer = new JsonSerializer();
-
-            using (var reader = new StringReader(content)) {
-                using (var jsonReader = new JsonTextReader(reader)) {
-                    return serializer.Deserialize<IEnumerable<int>>(jsonReader);        
+            if (response.IsValid) {
+                using (var reader = new StringReader(result.Content)) {
+                    using (var jsonReader = new JsonTextReader(reader)) {
+                        var serializer = new JsonSerializer();
+                        response.Content = serializer.Deserialize<IEnumerable<int>>(jsonReader);
+                    }
                 }
             }
+            else {
+                foreach (var error in result.Errors) {
+                    response.AddError(error);
+                }
+            }
+
+            return response;
         }
     }
 }
