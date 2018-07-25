@@ -10,6 +10,6 @@ namespace OZE.AquariumApi.Services {
         Task<Response<StatusViewModel>> TurnOff();
         Task<Response<StatusViewModel>> TurnOnLedSet(int id);
         Task<Response<StatusViewModel>> TurnOffLedSet(int id);
-        Task<Response<IEnumerable<int>>> GetLedPins();
+        Task<Response<IEnumerable<StatusViewModel>>> GetLedPins();
     }
 }

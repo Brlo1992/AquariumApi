@@ -27,17 +27,21 @@ namespace OZE.AquariumApi.Services {
 
         public async Task<Response<StatusViewModel>> TurnOnLedSet(int id) {
             var response = await aquariumHttpFactory.Send($"/turnOnLedSet/{id}");
-            return deserializeService.Deserialize<StatusViewModel>(response);
+            var result = deserializeService.Deserialize<StatusViewModel>(response);
+            result.Content.Id = id;
+            return result;
         }
 
         public async Task<Response<StatusViewModel>> TurnOffLedSet(int id) {
             var response = await aquariumHttpFactory.Send($"/turnOffLedSet/{id}");
-            return deserializeService.Deserialize<StatusViewModel>(response);
+            var result = deserializeService.Deserialize<StatusViewModel>(response);
+            result.Content.Id = id;
+            return result;
         }
 
-        public async Task<Response<IEnumerable<int>>> GetLedPins() {
+        public async Task<Response<IEnumerable<StatusViewModel>>> GetLedPins() {
             var response = await aquariumHttpFactory.Send("/getLedPins");
-            return deserializeService.Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<StatusViewModel>>(response);
         }
     }
 }

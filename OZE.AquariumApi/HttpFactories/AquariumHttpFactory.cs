@@ -4,18 +4,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using OZE.AquariumApi.Models;
-using OZE.AquariumApi.Services;
 
 namespace OZE.AquariumApi.HttpFactories {
     public class AquariumHttpFactory {
         private readonly HttpClient client;
-        private readonly IAquariumService communicationService;
-        private readonly IDeserializeService deserializeService;
 
-        public AquariumHttpFactory(HttpClient client, IAquariumService communicationService, IDeserializeService deserializeService) {
+        public AquariumHttpFactory(HttpClient client) {
             this.client = client;
-            this.communicationService = communicationService;
-            this.deserializeService = deserializeService;
         }
 
         public async Task<Response<string>> Send(string url) {

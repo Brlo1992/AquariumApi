@@ -35,7 +35,7 @@ namespace OZE.AquariumApi.Controllers {
 
         [HttpGet]
         [Route("getLedPins")]
-        public async Task<Response<IEnumerable<int>>> GetLedIds() => await aquariumService.GetLedPins();
+        public async Task<Response<IEnumerable<StatusViewModel>>> GetLedIds() => await aquariumService.GetLedPins();
 
     }
 }
