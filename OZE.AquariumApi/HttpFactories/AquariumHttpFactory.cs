@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.Services;
+using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.HttpFactories {
     public class AquariumHttpFactory {
@@ -23,24 +24,24 @@ namespace OZE.AquariumApi.HttpFactories {
             return deserializeService.Deserialize<T>(response);
         }
 
-        public async Task<Response> TurnOn() {
+        public async Task<Response<StatusViewModel>>  TurnOn() {
             var response = await communicationService.Send("/turnOn");
-            return deserializeService.Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<StatusViewModel>(response);
         }
 
-        public async Task<Response> TurnOff() {
+        public async Task<Response<StatusViewModel>>  TurnOff() {
             var response = await communicationService.Send("/turnOff");
-            return deserializeService.Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<StatusViewModel>(response);
         }
 
-        public async Task<Response> TurnOnLedSet(int id) {
+        public async Task<Response<StatusViewModel>>  TurnOnLedSet(int id) {
             var response = await communicationService.Send($"/turnOnLedSet/{id}");
-            return deserializeService.Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<StatusViewModel>(response);
         }
 
-        public async Task<Response> TurnOffLedSet(int id) {
+        public async Task<Response<StatusViewModel>>  TurnOffLedSet(int id) {
             var response = await communicationService.Send($"/turnOffLedSet/{id}");
-            return deserializeService.Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<StatusViewModel>(response);
         }
 
         public async Task<Response<IEnumerable<int>>> GetLedPins() {

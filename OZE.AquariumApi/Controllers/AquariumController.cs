@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using OZE.AquariumApi.HttpFactories;
 using OZE.AquariumApi.Models;
+using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.Controllers {
     [Route("api/aquarium")]
@@ -18,19 +19,19 @@ namespace OZE.AquariumApi.Controllers {
 
         [HttpGet]
         [Route("turnOn")]
-        public async Task TurnOn() => await aquariumHttpFactory.TurnOn();
+        public async Task<Response<StatusViewModel>> TurnOn() => await aquariumHttpFactory.TurnOn();
 
         [HttpGet]
         [Route("turnOff")]
-        public async Task TurnOff() => await aquariumHttpFactory.TurnOff();
+        public async Task<Response<StatusViewModel>> TurnOff() => await aquariumHttpFactory.TurnOff();
 
         [HttpGet]
         [Route("turnOnLedSet/{id}")]
-        public async Task TurnOnLedSet(int id) => await aquariumHttpFactory.TurnOnLedSet(id);
+        public async Task<Response<StatusViewModel>> TurnOnLedSet(int id) => await aquariumHttpFactory.TurnOnLedSet(id);
 
         [HttpGet]
         [Route("turnOffLedSet/{id}")]
-        public async Task TurnOffLedSet(int id) => await aquariumHttpFactory.TurnOffLedSet(id);
+        public async Task<Response<StatusViewModel>> TurnOffLedSet(int id) => await aquariumHttpFactory.TurnOffLedSet(id);
 
         [HttpGet]
         [Route("getLedPins")]
