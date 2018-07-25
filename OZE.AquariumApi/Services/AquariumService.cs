@@ -1,33 +1,43 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using OZE.AquariumApi.HttpFactories;
 using OZE.AquariumApi.Models;
+using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.Services {
-    public class CommunicationService : ICommunicationService {
-        private readonly HttpClient client;
+    public class AquariumService : IAquariumService {
+        private readonly AquariumHttpFactory aquariumHttpFactory;
+        private readonly IDeserializeService deserializeService;
 
-        public CommunicationService(HttpClient client) {
-            this.client = client;
+        public AquariumService(AquariumHttpFactory aquariumHttpFactory, IDeserializeService deserializeService) {
+            this.aquariumHttpFactory = aquariumHttpFactory;
+            this.deserializeService = deserializeService;
         }
 
-        public async Task<Response<string>> Send(string url) {
-            var response = new Response<string>();
+        public async Task<Response<StatusViewModel>> TurnOn() {
+            var response = await aquariumHttpFactory.Send("/turnOn");
+            return deserializeService.Deserialize<StatusViewModel>(response);
+        }
 
-            try {
-                var result = await client.GetAsync(url);
-                result.EnsureSuccessStatusCode();
+        public async Task<Response<StatusViewModel>> TurnOff() {
+            var response = await aquariumHttpFactory.Send("/turnOff");
+            return deserializeService.Deserialize<StatusViewModel>(response);
+        }
 
-                response.Content = await result.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-                response.AddError(ex.Message);
-            }
+        public async Task<Response<StatusViewModel>> TurnOnLedSet(int id) {
+            var response = await aquariumHttpFactory.Send($"/turnOnLedSet/{id}");
+            return deserializeService.Deserialize<StatusViewModel>(response);
+        }
 
-            return response;
+        public async Task<Response<StatusViewModel>> TurnOffLedSet(int id) {
+            var response = await aquariumHttpFactory.Send($"/turnOffLedSet/{id}");
+            return deserializeService.Deserialize<StatusViewModel>(response);
+        }
+
+        public async Task<Response<IEnumerable<int>>> GetLedPins() {
+            var response = await aquariumHttpFactory.Send("/getLedPins");
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
     }
 }
