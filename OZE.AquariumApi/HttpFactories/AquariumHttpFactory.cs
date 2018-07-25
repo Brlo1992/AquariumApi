@@ -16,7 +16,7 @@ namespace OZE.AquariumApi.HttpFactories {
             this.client = client;
         }
 
-        public async Task<Response<string>> Send(string url) {
+        private async Task<Response<string>> Send(string url) {
             var response = new Response<string>();
 
             try {
@@ -33,29 +33,33 @@ namespace OZE.AquariumApi.HttpFactories {
             return response;
         }
 
+        private async Task<Response> Deserialize(Response<string> response) {
+            var result = new Response<T>();
+
+            if (response.IsValid) {
+                using (var reader = new StringReader(response.Content)) {
+                    using (var jsonReader = new JsonTextReader(reader)) {
+                        var serializer = new JsonSerializer();
+                        result.Content = serializer.Deserialize<T>(jsonReader);
+                    }
+                }
+            }
+            else {
+                foreach (var error in response.Errors) {
+                    response.AddError(error);
+                }
+            }
+
+            return response;
+        }
+
         public async Task<Response> TurnOn() => await Send("/turnOn");
         public async Task<Response> TurnOff() => await Send("/turnOff");
         public async Task<Response> TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
         public async Task<Response> TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
         public async Task<Response<IEnumerable<int>>> GetLedPins() {
             var result = await Send("/getLedPins");
-            var response = new Response<IEnumerable<int>>();
-
-            if (result.IsValid) {
-                using (var reader = new StringReader(result.Content)) {
-                    using (var jsonReader = new JsonTextReader(reader)) {
-                        var serializer = new JsonSerializer();
-                        response.Content = serializer.Deserialize<IEnumerable<int>>(jsonReader);
-                    }
-                }
-            }
-            else {
-                foreach (var error in result.Errors) {
-                    response.AddError(error);
-                }
-            }
-
-            return response;
+           
         }
     }
 }
