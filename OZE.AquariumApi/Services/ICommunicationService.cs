@@ -3,8 +3,7 @@
 using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.Services {
-    public interface ICommunicationService
-    {
+    public interface ICommunicationService {
         Task<Response<string>> Send(string url);
     }
 }
