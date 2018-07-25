@@ -11,10 +11,12 @@ using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.HttpFactories {
     public class AquariumHttpFactory {
+        private readonly HttpClient client;
         private readonly ICommunicationService communicationService;
         private readonly IDeserializeService deserializeService;
 
-        public AquariumHttpFactory(ICommunicationService communicationService, IDeserializeService deserializeService) {
+        public AquariumHttpFactory(HttpClient client, ICommunicationService communicationService, IDeserializeService deserializeService) {
+            this.client = client;
             this.communicationService = communicationService;
             this.deserializeService = deserializeService;
         }
