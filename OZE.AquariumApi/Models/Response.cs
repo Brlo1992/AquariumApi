@@ -4,7 +4,7 @@ using System.Linq;
 namespace OZE.AquariumApi.Models {
     public class Response {
         public void AddError(string error) => Errors.Add(error);
-        public ICollection<string> Errors { get; }
+        public ICollection<string> Errors { get; } = new List<string>();
         public bool IsValid => Errors.Any() == false;
     }
     public class Response<T> :Response {

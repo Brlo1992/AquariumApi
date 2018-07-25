@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using OZE.AquariumApi.HttpFactories;
+using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.Controllers {
     [Route("api/aquarium")]

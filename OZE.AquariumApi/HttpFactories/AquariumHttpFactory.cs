@@ -41,7 +41,7 @@ namespace OZE.AquariumApi.HttpFactories {
             var result = await Send("/getLedPins");
             var response = new Response<IEnumerable<int>>();
 
-            if (response.IsValid) {
+            if (result.IsValid) {
                 using (var reader = new StringReader(result.Content)) {
                     using (var jsonReader = new JsonTextReader(reader)) {
                         var serializer = new JsonSerializer();
