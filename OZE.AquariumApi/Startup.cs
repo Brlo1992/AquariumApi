@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OZE.AquariumApi.HttpFactories;
+using OZE.AquariumApi.Services;
 
 namespace OZE.AquariumApi
 {
@@ -31,6 +32,7 @@ namespace OZE.AquariumApi
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));
+            services.AddTransient<IDeserializeService, DeserializeService>();
             services.AddLogging();
         }
 
