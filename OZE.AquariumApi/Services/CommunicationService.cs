@@ -12,6 +12,7 @@ namespace OZE.AquariumApi.Services {
         public CommunicationService(HttpClient client) {
             this.client = client;
         }
+
         public async Task<Response<string>> Send(string url) {
             var response = new Response<string>();
 

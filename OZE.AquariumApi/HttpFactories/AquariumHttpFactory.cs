@@ -9,57 +9,37 @@ using OZE.AquariumApi.Models;
 using OZE.AquariumApi.Services;
 
 namespace OZE.AquariumApi.HttpFactories {
-    public class AquariumHttpFactory
-    {
-        private readonly HttpClient client;
+    public class AquariumHttpFactory {
+        private readonly ICommunicationService communicationService;
         private readonly IDeserializeService deserializeService;
 
-        public AquariumHttpFactory(HttpClient client, IDeserializeService deserializeService ){
-            this.client = client;
+        public AquariumHttpFactory(ICommunicationService communicationService, IDeserializeService deserializeService) {
+            this.communicationService = communicationService;
             this.deserializeService = deserializeService;
         }
 
-        private async Task<Response<string>> Send(string url) {
-            var response = new Response<string>();
-
-            try {
-                var result = await this.client.GetAsync(url);
-                result.EnsureSuccessStatusCode();
-
-                response.Content = await result.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex) {
-                Debug.WriteLine(ex.Message);
-                response.AddError(ex.Message);
-            }
-
-            return response;
-        }
-
-        
-
         public async Task<Response> TurnOn() {
-            var response = await Send("/turnOn");
+            var response = await communicationService.Send("/turnOn");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOff() {
-            var response = await Send("/turnOff");
+            var response = await communicationService.Send("/turnOff");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOnLedSet(int id) {
-            var response = await Send($"/turnOnLedSet/{id}");
+            var response = await communicationService.Send($"/turnOnLedSet/{id}");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOffLedSet(int id) {
-            var response = await Send($"/turnOffLedSet/{id}");
+            var response = await communicationService.Send($"/turnOffLedSet/{id}");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response<IEnumerable<int>>> GetLedPins() {
-            var response = await Send("/getLedPins");
+            var response = await communicationService.Send("/getLedPins");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
     }
