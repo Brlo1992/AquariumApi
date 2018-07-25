@@ -18,6 +18,11 @@ namespace OZE.AquariumApi.HttpFactories {
             this.deserializeService = deserializeService;
         }
 
+        private async Task<Response<T>> HandleSend<T>(string url) {
+            var response = await communicationService.Send(url);
+            return deserializeService.Deserialize<T>(response);
+        }
+
         public async Task<Response> TurnOn() {
             var response = await communicationService.Send("/turnOn");
             return deserializeService.Deserialize<IEnumerable<int>>(response);
