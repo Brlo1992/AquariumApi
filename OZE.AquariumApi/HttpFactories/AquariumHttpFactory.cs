@@ -6,14 +6,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OZE.AquariumApi.Models;
+using OZE.AquariumApi.Services;
 
 namespace OZE.AquariumApi.HttpFactories {
     public class AquariumHttpFactory
     {
         private readonly HttpClient client;
+        private readonly IDeserializeService deserializeService;
 
-        public AquariumHttpFactory(HttpClient client){
+        public AquariumHttpFactory(HttpClient client, IDeserializeService deserializeService ){
             this.client = client;
+            this.deserializeService = deserializeService;
         }
 
         private async Task<Response<string>> Send(string url) {
@@ -33,49 +36,31 @@ namespace OZE.AquariumApi.HttpFactories {
             return response;
         }
 
-        private Response<T> Deserialize<T>(Response<string> response) {
-            var result = new Response<T>();
-
-            if (response.IsValid) {
-                using (var reader = new StringReader(response.Content)) {
-                    using (var jsonReader = new JsonTextReader(reader)) {
-                        var serializer = new JsonSerializer();
-                        result.Content = serializer.Deserialize<T>(jsonReader);
-                    }
-                }
-            }
-            else {
-                foreach (var error in response.Errors) {
-                    response.AddError(error);
-                }
-            }
-
-            return result;
-        }
+        
 
         public async Task<Response> TurnOn() {
             var response = await Send("/turnOn");
-            return Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOff() {
             var response = await Send("/turnOff");
-            return Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOnLedSet(int id) {
             var response = await Send($"/turnOnLedSet/{id}");
-            return Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response> TurnOffLedSet(int id) {
             var response = await Send($"/turnOffLedSet/{id}");
-            return Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
 
         public async Task<Response<IEnumerable<int>>> GetLedPins() {
             var response = await Send("/getLedPins");
-            return Deserialize<IEnumerable<int>>(response);
+            return deserializeService.Deserialize<IEnumerable<int>>(response);
         }
     }
 }
