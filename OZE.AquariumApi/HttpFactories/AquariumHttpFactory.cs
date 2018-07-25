@@ -33,7 +33,7 @@ namespace OZE.AquariumApi.HttpFactories {
             return response;
         }
 
-        private async Task<Response> Deserialize(Response<string> response) {
+        private Response<T> Deserialize<T>(Response<string> response) {
             var result = new Response<T>();
 
             if (response.IsValid) {
@@ -50,16 +50,32 @@ namespace OZE.AquariumApi.HttpFactories {
                 }
             }
 
-            return response;
+            return result;
         }
 
-        public async Task<Response> TurnOn() => await Send("/turnOn");
-        public async Task<Response> TurnOff() => await Send("/turnOff");
-        public async Task<Response> TurnOnLedSet(int id) => await Send($"/turnOnLedSet/{id}");
-        public async Task<Response> TurnOffLedSet(int id) => await Send($"/turnOffLedSet/{id}");
+        public async Task<Response> TurnOn() {
+            var response = await Send("/turnOn");
+            return Deserialize<IEnumerable<int>>(response);
+        }
+
+        public async Task<Response> TurnOff() {
+            var response = await Send("/turnOff");
+            return Deserialize<IEnumerable<int>>(response);
+        }
+
+        public async Task<Response> TurnOnLedSet(int id) {
+            var response = await Send($"/turnOnLedSet/{id}");
+            return Deserialize<IEnumerable<int>>(response);
+        }
+
+        public async Task<Response> TurnOffLedSet(int id) {
+            var response = await Send($"/turnOffLedSet/{id}");
+            return Deserialize<IEnumerable<int>>(response);
+        }
+
         public async Task<Response<IEnumerable<int>>> GetLedPins() {
-            var result = await Send("/getLedPins");
-           
+            var response = await Send("/getLedPins");
+            return Deserialize<IEnumerable<int>>(response);
         }
     }
 }
