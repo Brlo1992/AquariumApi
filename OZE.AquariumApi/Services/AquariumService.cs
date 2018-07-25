@@ -28,14 +28,12 @@ namespace OZE.AquariumApi.Services {
         public async Task<Response<StatusViewModel>> TurnOnLedSet(int id) {
             var response = await aquariumHttpFactory.Send($"/turnOnLedSet/{id}");
             var result = deserializeService.Deserialize<StatusViewModel>(response);
-            result.Content.Id = id;
             return result;
         }
 
         public async Task<Response<StatusViewModel>> TurnOffLedSet(int id) {
             var response = await aquariumHttpFactory.Send($"/turnOffLedSet/{id}");
             var result = deserializeService.Deserialize<StatusViewModel>(response);
-            result.Content.Id = id;
             return result;
         }
 
