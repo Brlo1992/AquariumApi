@@ -49,14 +49,15 @@ namespace OZE.AquariumApi.Services {
                 Content = new List<StatusViewModel> {
                     new StatusViewModel {
                         Id = 4,
-                        Status = "off"
+                        Status = "on"
                     },
                     new StatusViewModel {
                         Id = 5,
                         Status = "off"
+                    },
                     new StatusViewModel {
                         Id = 6,
-                        Status = "off"
+                        Status = "on"
                     }
                 }
             };
