@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using OZE.AquariumApi.HttpFactories;
+
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.ViewModels;
 
@@ -55,7 +54,6 @@ namespace OZE.AquariumApi.Services {
                     new StatusViewModel {
                         Id = 5,
                         Status = "off"
-                    },
                     new StatusViewModel {
                         Id = 6,
                         Status = "off"

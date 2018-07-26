@@ -31,7 +31,8 @@ namespace OZE.AquariumApi
                 options.AddPolicy("any", builder => 
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddTransient<IDeserializeService, DeserializeService>();
-            services.AddTransient<IAquariumService, AquariumService>();
+            services.AddTransient<IAquariumService, FakeAquariumService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));
             services.AddLogging();
