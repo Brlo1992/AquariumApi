@@ -57,7 +57,7 @@ namespace OZE.AquariumApi.Services {
                     },
                     new StatusViewModel {
                         Id = 6,
-                        Status = "on"
+                        Status = "d"
                     }
                 }
             };
