@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using OZE.AquariumApi.Models;
+using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.Controllers {
     [Route("api/scheduledTask")]
@@ -11,8 +12,8 @@ namespace OZE.AquariumApi.Controllers {
     {
         [HttpGet]
         [Route("getAll")]
-        public async Task<Response<ScheduledTask>> GetAllScheduledTasks() {
-
+        public async Task<Response<ScheduledTaskViewModel>> GetAllScheduledTasks() {
+            
         }
     }
 }
