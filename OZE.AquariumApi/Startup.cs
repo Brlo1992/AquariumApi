@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using OZE.AquariumApi.Database;
 using OZE.AquariumApi.HttpFactories;
 using OZE.AquariumApi.Services;
 using OZE.AquariumApi.Services.FakeServices;
@@ -34,6 +34,7 @@ namespace OZE.AquariumApi {
                 services.AddTransient<IAquariumService, AquariumService>();
                 services.AddTransient<IScheduledTaskService, ScheduledTaskService>();
             }
+            services.AddTransient<IDatabaseContext, MongoContext>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));
             services.AddLogging();
