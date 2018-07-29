@@ -34,11 +34,13 @@ namespace OZE.AquariumApi {
                 services.AddTransient<IAquariumService, AquariumService>();
                 services.AddTransient<IScheduledTaskService, ScheduledTaskService>();
             }
-            services.AddTransient<IDatabaseContext, MongoContext>();
+            services.AddTransient<IDatabaseContext>(MongoFactory);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));
             services.AddLogging();
         }
+
+        private IDatabaseContext MongoFactory(IServiceProvider arg) => new MongoContext(Configuration["MongoDb:Url"]);
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
