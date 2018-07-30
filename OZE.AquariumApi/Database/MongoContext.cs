@@ -13,8 +13,24 @@ namespace OZE.AquariumApi.Database {
             ));
         }
 
-        public Response Add<T>(T item) => throw new System.NotImplementedException();
-        public Response<List<T>> GetAll<T>() => throw new System.NotImplementedException();
+        public Response Add<T>(T item) {
+            throw new System.NotImplementedException();
+        }
+
+        public Response<List<T>> GetAll<T>() {
+            var response = new Response<List<T>>();
+
+            try {
+                var result = client.GetDatabase("test").GetCollection<T>("").AsQueryable();
+                response.Content = result.ToList<T>();
+            }
+            catch (System.Exception ex) {
+                response.AddError(ex.Message);
+            }
+
+            return response;
+        }
+
         public Response<T> GetSingle<T>(int id) => throw new System.NotImplementedException();
         public Response Remove(int id) => throw new System.NotImplementedException();
         public Response Update<T>(T item) => throw new System.NotImplementedException();
