@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OZE.AquariumApi.Models {
@@ -9,5 +10,7 @@ namespace OZE.AquariumApi.Models {
     }
     public class Response<T> :Response {
         public T Content { get; set; }
+
+        internal bool Any() => throw new NotImplementedException();
     }
 }
