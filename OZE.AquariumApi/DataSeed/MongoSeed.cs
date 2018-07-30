@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using OZE.AquariumApi.Database;
+using OZE.AquariumApi.Models;
 
-namespace OZE.AquariumApi.DataSeed
-{
+namespace OZE.AquariumApi.DataSeed {
     public class MongoSeed
     {
-        public MongoSeed() {
+        private readonly IDatabaseContext databaseContext;
 
+        public MongoSeed(IDatabaseContext databaseContext) {
+            this.databaseContext = databaseContext;
+        }
+
+        public void SeedData() {
+            var turnOnTask = new ScheduledTask {
+
+            }
         }
     }
 }
