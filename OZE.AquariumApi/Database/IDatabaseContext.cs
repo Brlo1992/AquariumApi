@@ -9,5 +9,6 @@ namespace OZE.AquariumApi.Database {
         Response Add<T>(T item);
         Response Update<T>(T item);
         Response Remove(int id);
+        void SaveChanges();
     }
 }

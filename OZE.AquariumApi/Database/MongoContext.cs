@@ -19,14 +19,23 @@ namespace OZE.AquariumApi.Database {
         }
 
         public Response Add<T>(T item) {
-            throw new System.NotImplementedException();
+            var response = new Response<T>();
+
+            try {
+                GetCollection<T>().InsertOne(item);
+            }
+            catch (System.Exception ex) {
+                response.AddError(ex.Message);
+            }
+
+            return response;
         }
 
         public Response<List<T>> GetAll<T>() {
             var response = new Response<List<T>>();
 
             try {
-                var result = client.GetDatabase(database).GetCollection<T>(collection).AsQueryable();
+                var result = GetCollection<T>().AsQueryable();
                 response.Content = result.ToList<T>();
             }
             catch (System.Exception ex) {
@@ -36,8 +45,10 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
+        private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
         public Response<T> GetSingle<T>(int id) => throw new System.NotImplementedException();
         public Response Remove(int id) => throw new System.NotImplementedException();
+        public void SaveChanges() => throw new System.NotImplementedException();
         public Response Update<T>(T item) => throw new System.NotImplementedException();
     }
 }
