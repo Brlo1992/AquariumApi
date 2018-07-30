@@ -40,7 +40,7 @@ namespace OZE.AquariumApi {
             services.AddLogging();
         }
 
-        private IDatabaseContext MongoFactory(IServiceProvider arg) => new MongoContext(Configuration["MongoDb:Url"]);
+        private IDatabaseContext MongoFactory(IServiceProvider arg) => new MongoContext(Configuration["MongoDb:Url"], Configuration["MongoDb:AquariumDb"], Configuration["MongoDb:ScheduledTasks"]);
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {

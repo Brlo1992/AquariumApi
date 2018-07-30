@@ -7,10 +7,15 @@ namespace OZE.AquariumApi.Database {
 
     public class MongoContext : IDatabaseContext {
         private readonly MongoClient client;
-        public MongoContext(string url) {
+        private readonly string database;
+        private readonly string collection;
+
+        public MongoContext(string url, string database, string collection) {
             client = new MongoClient(MongoClientSettings.FromUrl(
               new MongoUrl(url)
             ));
+            this.database = database;
+            this.collection = collection;
         }
 
         public Response Add<T>(T item) {
@@ -21,7 +26,7 @@ namespace OZE.AquariumApi.Database {
             var response = new Response<List<T>>();
 
             try {
-                var result = client.GetDatabase("test").GetCollection<T>("").AsQueryable();
+                var result = client.GetDatabase(database).GetCollection<T>(collection).AsQueryable();
                 response.Content = result.ToList<T>();
             }
             catch (System.Exception ex) {
