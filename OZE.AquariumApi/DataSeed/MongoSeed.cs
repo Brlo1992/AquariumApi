@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
 
@@ -36,6 +37,6 @@ namespace OZE.AquariumApi.DataSeed {
             }
         }
 
-        private bool IsEmpty() => databaseContext.GetAll<ScheduledTask>().Any() == false;
+        private bool IsEmpty() => databaseContext.GetAll<ScheduledTask>().Content.Any() == false;
     }
 }

@@ -53,6 +53,7 @@ namespace OZE.AquariumApi {
                 app.UseHsts();
             }
 
+
             var seed = serviceProvider.GetService<MongoSeed>();
             seed.SeedData();
 
