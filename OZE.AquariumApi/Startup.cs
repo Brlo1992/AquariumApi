@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OZE.AquariumApi.Database;
+using OZE.AquariumApi.DataSeed;
 using OZE.AquariumApi.HttpFactories;
 using OZE.AquariumApi.Services;
 using OZE.AquariumApi.Services.FakeServices;
@@ -25,6 +26,7 @@ namespace OZE.AquariumApi {
                 options.AddPolicy("any", builder =>
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddTransient<IDeserializeService, DeserializeService>();
+            services.AddTransient<MongoSeed>();
 
             if (deviceDisconnected) {
                 services.AddTransient<IAquariumService, FakeAquariumService>();
@@ -43,13 +45,16 @@ namespace OZE.AquariumApi {
         private IDatabaseContext MongoFactory(IServiceProvider arg) => new MongoContext(Configuration["MongoDb:Url"], Configuration["MongoDb:AquariumDb"], Configuration["MongoDb:ScheduledTasks"]);
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
             else {
                 app.UseHsts();
             }
+
+            var seed = serviceProvider.GetService<MongoSeed>();
+            seed.SeedData();
 
             app.UseCors("any");
 
