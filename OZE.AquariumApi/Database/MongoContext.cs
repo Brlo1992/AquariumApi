@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Authentication;
 using MongoDB.Driver;
 using OZE.AquariumApi.Models;
 
@@ -11,9 +12,15 @@ namespace OZE.AquariumApi.Database {
         private readonly string collection;
 
         public MongoContext(string url, string database, string collection) {
-            client = new MongoClient(MongoClientSettings.FromUrl(
-              new MongoUrl(url)
-            ));
+            string connectionString =
+                @"mongodb://aquarium-db:uzFtIk2SWnmF2VayfTkx8i4fPt6WoyZSCfTXjbDN5MWhhVAUpaaKZpmNEoBmGPtM9WL2rckZ9qt9SE8PdYiJ6A==@aquarium-db.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
+            MongoClientSettings settings = MongoClientSettings.FromUrl(
+              new MongoUrl(connectionString)
+            );
+            settings.SslSettings =
+                new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            client = new MongoClient(settings);
+
             this.database = database;
             this.collection = collection;
         }
@@ -35,8 +42,7 @@ namespace OZE.AquariumApi.Database {
             var response = new Response<List<T>>();
 
             try {
-                var result = GetCollection<T>().AsQueryable();
-                response.Content = result.ToList<T>();
+
             }
             catch (System.Exception ex) {
                 response.AddError(ex.Message);

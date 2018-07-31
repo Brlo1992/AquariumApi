@@ -12,7 +12,7 @@ namespace OZE.AquariumApi.DataSeed {
         }
 
         public void SeedData() {
-            if (IsEmpty()) {
+            //if (IsEmpty()) {
 
                 var turnOnTask = new ScheduledTask {
                     Id = 1,
@@ -34,7 +34,7 @@ namespace OZE.AquariumApi.DataSeed {
                 this.databaseContext.Add(turnOffTask);
 
                 this.databaseContext.SaveChanges();
-            }
+            //}
         }
 
         private bool IsEmpty() => databaseContext.GetAll<ScheduledTask>().Content.Any() == false;
