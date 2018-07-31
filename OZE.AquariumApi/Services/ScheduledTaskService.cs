@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
+using OZE.AquariumApi.ViewModels;
 
 namespace OZE.AquariumApi.Services {
     public class ScheduledTaskService : IScheduledTaskService {
@@ -12,8 +13,17 @@ namespace OZE.AquariumApi.Services {
             this.databaseContext = databaseContext;
         }
 
-        public async Task<Response> AddTaskAsync(ScheduledTask scheduledTask) => await databaseContext.Add(scheduledTask);
+        public async Task<Response> AddTaskAsync(ScheduledTaskViewModel scheduledTask) {
+            var response = new Response();
+            var result = await databaseContext.Add(scheduledTask);
 
-        public async Task<Response<IEnumerable<ScheduledTask>>> GetAllAsync() => await databaseContext.GetAll<ScheduledTask>();
+            response.FetchData(result);
+
+            return response;
+        }
+
+        public async Task<Response<List<ScheduledTaskViewModel>>> GetAllAsync() {
+            return await databaseContext.GetAll<ScheduledTask>();
+        }
     }
 }
