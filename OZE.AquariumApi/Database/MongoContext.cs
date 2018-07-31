@@ -4,21 +4,16 @@ using MongoDB.Driver;
 using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.Database {
-    //@"mongodb://aquarium-db:uzFtIk2SWnmF2VayfTkx8i4fPt6WoyZSCfTXjbDN5MWhhVAUpaaKZpmNEoBmGPtM9WL2rckZ9qt9SE8PdYiJ6A==@aquarium-db.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
-
     public class MongoContext : IDatabaseContext {
         private readonly MongoClient client;
         private readonly string database;
         private readonly string collection;
 
         public MongoContext(string url, string database, string collection) {
-            string connectionString =
-                @"mongodb://aquarium-db:uzFtIk2SWnmF2VayfTkx8i4fPt6WoyZSCfTXjbDN5MWhhVAUpaaKZpmNEoBmGPtM9WL2rckZ9qt9SE8PdYiJ6A==@aquarium-db.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
-            MongoClientSettings settings = MongoClientSettings.FromUrl(
-              new MongoUrl(connectionString)
-            );
-            settings.SslSettings =
-                new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            var settings = MongoClientSettings.FromUrl(new MongoUrl(url));
+
+            settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+
             client = new MongoClient(settings);
 
             this.database = database;
