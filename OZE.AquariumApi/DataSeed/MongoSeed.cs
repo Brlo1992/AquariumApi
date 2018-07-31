@@ -12,29 +12,27 @@ namespace OZE.AquariumApi.DataSeed {
         }
 
         public void SeedData() {
-            //if (IsEmpty()) {
+            if (IsEmpty()) {
 
                 var turnOnTask = new ScheduledTask {
                     Id = 1,
-                    Name = "TrunOn",
+                    Name = "TurnOn",
                     Status = "on",
                     ExecutionTime = DateTime.Now.AddHours(-14),
                     LastExecutionTime = DateTime.Now.AddHours(-14)
                 };
                 
                 var turnOffTask = new ScheduledTask {
-                    Id = 1,
-                    Name = "TrunOff",
+                    Id = 2,
+                    Name = "TurnOff",
                     Status = "off",
                     ExecutionTime = DateTime.Now.AddHours(-1),
                     LastExecutionTime = DateTime.Now.AddHours(-1)
                 };
 
-                this.databaseContext.Add(turnOnTask);
-                this.databaseContext.Add(turnOffTask);
-
-                this.databaseContext.SaveChanges();
-            //}
+                databaseContext.Add(turnOnTask);
+                databaseContext.Add(turnOffTask);
+            }
         }
 
         private bool IsEmpty() => databaseContext.GetAll<ScheduledTask>().Content.Any() == false;

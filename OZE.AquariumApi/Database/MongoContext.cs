@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Authentication;
 using MongoDB.Driver;
 using OZE.AquariumApi.Models;
@@ -49,7 +50,6 @@ namespace OZE.AquariumApi.Database {
         private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
         public Response<T> GetSingle<T>(int id) => throw new System.NotImplementedException();
         public Response Remove(int id) => throw new System.NotImplementedException();
-        public void SaveChanges() => throw new System.NotImplementedException();
         public Response Update<T>(T item) => throw new System.NotImplementedException();
     }
 }

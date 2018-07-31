@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.DataSeed;
 using OZE.AquariumApi.HttpFactories;
@@ -36,7 +37,7 @@ namespace OZE.AquariumApi {
                 services.AddTransient<IAquariumService, AquariumService>();
                 services.AddTransient<IScheduledTaskService, ScheduledTaskService>();
             }
-            services.AddTransient<IDatabaseContext>(MongoFactory);
+            services.AddTransient(MongoFactory);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));
             services.AddLogging();
@@ -52,7 +53,6 @@ namespace OZE.AquariumApi {
             else {
                 app.UseHsts();
             }
-
 
             var seed = serviceProvider.GetService<MongoSeed>();
             seed.SeedData();
