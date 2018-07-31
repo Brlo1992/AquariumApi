@@ -31,12 +31,11 @@ namespace OZE.AquariumApi {
 
             if (deviceDisconnected) {
                 services.AddTransient<IAquariumService, FakeAquariumService>();
-                services.AddTransient<IScheduledTaskService, FakeScheduledTaskService>();
             }
             else {
                 services.AddTransient<IAquariumService, AquariumService>();
-                services.AddTransient<IScheduledTaskService, ScheduledTaskService>();
             }
+            services.AddTransient<IScheduledTaskService, ScheduledTaskService>();
             services.AddTransient(MongoFactory);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient<AquariumHttpFactory>(client => client.BaseAddress = new Uri("http://192.168.8.133"));

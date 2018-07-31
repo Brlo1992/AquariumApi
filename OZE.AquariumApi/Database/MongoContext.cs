@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Authentication;
-
+using System.Threading.Tasks;
 using MongoDB.Driver;
 
 using OZE.AquariumApi.Models;
@@ -35,11 +35,11 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public Response<List<T>> GetAll<T>() {
+        public async Task<Response<List<T>>> GetAll<T>() {
             var response = new Response<List<T>>();
 
             try {
-                response.Content = GetCollection<T>().AsQueryable().ToList();
+                response.Content = await GetCollection<T>().AsQueryable().ToListAsync();
             }
             catch (System.Exception ex) {
                 response.AddError(ex.Message);
