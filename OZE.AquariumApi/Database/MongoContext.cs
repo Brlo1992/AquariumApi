@@ -22,11 +22,11 @@ namespace OZE.AquariumApi.Database {
             this.collection = collection;
         }
 
-        public Response Add<T>(T item) {
+        public async Task<Response> Add<T>(T item) {
             var response = new Response<T>();
 
             try {
-                GetCollection<T>().InsertOne(item);
+                await GetCollection<T>().InsertOneAsync(item);
             }
             catch (System.Exception ex) {
                 response.AddError(ex.Message);

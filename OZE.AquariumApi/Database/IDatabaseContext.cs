@@ -6,7 +6,7 @@ namespace OZE.AquariumApi.Database {
     public interface IDatabaseContext {
         Task<Response<IEnumerable<T>>> GetAll<T>();
         Response<T> GetSingle<T>(int id);
-        Response Add<T>(T item);
+        Task<Response> Add<T>(T item);
         Response Update<T>(T item);
         Response Remove(int id);
     }
