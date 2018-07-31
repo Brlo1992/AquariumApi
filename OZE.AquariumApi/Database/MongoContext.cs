@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Authentication;
+
 using MongoDB.Driver;
+
 using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.Database {
@@ -38,7 +39,7 @@ namespace OZE.AquariumApi.Database {
             var response = new Response<List<T>>();
 
             try {
-
+                response.Content = GetCollection<T>().AsQueryable().ToList();
             }
             catch (System.Exception ex) {
                 response.AddError(ex.Message);
