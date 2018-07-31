@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.DataSeed;
 using OZE.AquariumApi.HttpFactories;
+using OZE.AquariumApi.Mapper;
 using OZE.AquariumApi.Services;
-using OZE.AquariumApi.Services.FakeServices;
 
 namespace OZE.AquariumApi {
     public class Startup {
@@ -53,6 +53,7 @@ namespace OZE.AquariumApi {
                 app.UseHsts();
             }
 
+            MapperConfiguration.AddMaps();
             var seed = serviceProvider.GetService<MongoSeed>();
             seed.SeedData();
 
