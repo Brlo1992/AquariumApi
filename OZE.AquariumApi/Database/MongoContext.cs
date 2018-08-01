@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -64,12 +65,6 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        private FilterDefinition<T> GetIdFilter<T>(int id) {
-            var builder = Builders<T>.Filter;
-            var filter = builder.Eq("id", id);
-
-            return filter;
-        }
 
         public async Task<Response> Remove<T>(int id) {
             var response = new Response();
@@ -90,12 +85,52 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public Task<Response> Update<T>(T item) => throw new System.NotImplementedException();
+        public async Task<Response> Update<T>(T item, int id) {
+            var response = new Response();
+
+            var exist = await DoExist<T>(id);
+
+            if (exist) {
+                var filter = GetIdFilter<T>(id);
+                var update = GetUpdate<T>(item);
+                try {
+                    await GetCollection<T>().FindOneAndUpdateAsync(filter, update);
+                }
+                catch (Exception ex) {
+                    response.AddError(ex.Message);
+                }
+            }
+
+            return response;
+        }
+
+        private UpdateDefinition<T> GetUpdate<T>(T item) {
+            var builder = Builders<T>.Update;
+
+            var parsedItem = item as ScheduledTask;
+
+            var update = builder
+                            .Set("id", parsedItem.Id)
+                            .Set("name", parsedItem.Name)
+                            .Set("status", parsedItem.Status)
+                            .Set("urlAction", parsedItem.UrlAction)
+                            .Set("executionTime", parsedItem.ExecutionTime)
+                            .Set("lastExecutionTime", parsedItem.LastExecutionTime);
+
+            return update;
+        }
 
         private async Task<bool> DoExist<T>(int id) {
             var result = await GetSingle<T>(id);
 
             return result.Content != null;
+        }
+
+        private FilterDefinition<T> GetIdFilter<T>(int id) {
+            var builder = Builders<T>.Filter;
+            var filter = builder.Eq("id", id);
+
+            return filter;
         }
 
         private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
