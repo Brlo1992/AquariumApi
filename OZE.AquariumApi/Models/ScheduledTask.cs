@@ -8,6 +8,7 @@ namespace OZE.AquariumApi.Models {
         public string Status { get; set; }
         public DateTime ExecutionTime { get; set; }
         public DateTime? LastExecutionTime { get; set; }
+        public string UrlAction { get; internal set; }
 
         public ScheduledTask() {
 
