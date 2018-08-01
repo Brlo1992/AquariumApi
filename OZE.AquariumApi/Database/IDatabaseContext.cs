@@ -5,9 +5,9 @@ using OZE.AquariumApi.Models;
 namespace OZE.AquariumApi.Database {
     public interface IDatabaseContext {
         Task<Response<List<T>>> GetAll<T>();
-        Response<T> GetSingle<T>(int id);
+        Task<Response<T>> GetSingle<T>(int id);
         Task<Response> Add<T>(T item);
-        Response Update<T>(T item);
-        Response Remove(int id);
+        Task<Response> Update<T>(T item);
+        Task<Response> Remove(int id);
     }
 }

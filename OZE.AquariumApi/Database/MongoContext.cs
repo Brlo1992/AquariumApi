@@ -48,9 +48,10 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
+        public Task<Response<T>> GetSingle<T>(int id) => throw new System.NotImplementedException();
+        public Task<Response> Remove(int id) => throw new System.NotImplementedException();
+        public Task<Response> Update<T>(T item) => throw new System.NotImplementedException();
         private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
-        public Response<T> GetSingle<T>(int id) => throw new System.NotImplementedException();
-        public Response Remove(int id) => throw new System.NotImplementedException();
-        public Response Update<T>(T item) => throw new System.NotImplementedException();
+        
     }
 }
