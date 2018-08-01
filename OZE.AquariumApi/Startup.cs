@@ -53,8 +53,6 @@ namespace OZE.AquariumApi {
                 app.UseHsts();
             }
 
-            MapperConfiguration.AddMaps();
-            var seed = serviceProvider.GetService<MongoSeed>();
             seed.SeedData();
 
             app.UseCors("any");
