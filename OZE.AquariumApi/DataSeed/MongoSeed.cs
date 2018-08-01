@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
 
@@ -12,7 +13,7 @@ namespace OZE.AquariumApi.DataSeed {
         }
 
         public void SeedData() {
-            if (IsEmpty()) {
+            if (IsEmpty().Result) {
 
                 var turnOnTask = new ScheduledTask {
                     Id = 1,
@@ -35,6 +36,9 @@ namespace OZE.AquariumApi.DataSeed {
             }
         }
 
-        private bool IsEmpty() => databaseContext.GetAll<ScheduledTask>().Content.Any() == false;
+        private async Task<bool> IsEmpty() {
+            var result = await databaseContext.GetAll<ScheduledTask>();
+            return result.Content.Any() == false;
+        }
     }
 }
