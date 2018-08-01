@@ -51,12 +51,11 @@ namespace OZE.AquariumApi.Database {
         public async Task<Response<T>> GetSingle<T>(int id) {
             var response = new Response<T>();
 
-            var builder = Builders<T>.Filter;
-            var filter = builder.Eq("id", id);
+            var filter = GetIdFilter<T>(id);
 
             try {
                 var result = await GetCollection<T>().FindAsync<T>(filter);
-                response.Content = await result.FirstAsync();
+                response.Content = await result.FirstOrDefaultAsync();
             }
             catch (System.Exception ex) {
                 response.AddError(ex.Message);
@@ -65,8 +64,40 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public Task<Response> Remove(int id) => throw new System.NotImplementedException();
+        private FilterDefinition<T> GetIdFilter<T>(int id) {
+            var builder = Builders<T>.Filter;
+            var filter = builder.Eq("id", id);
+
+            return filter;
+        }
+
+        public async Task<Response> Remove<T>(int id) {
+            var response = new Response();
+
+            var exist = await DoExist<T>(id);
+
+            if (exist) {
+                var filter = GetIdFilter<T>(id);
+
+                try {
+                    await GetCollection<T>().FindOneAndDeleteAsync(filter);
+                }
+                catch (System.Exception ex) {
+                    response.AddError(ex.Message);
+                }
+            }
+
+            return response;
+        }
+
         public Task<Response> Update<T>(T item) => throw new System.NotImplementedException();
+
+        private async Task<bool> DoExist<T>(int id) {
+            var result = await GetSingle<T>(id);
+
+            return result.Content != null;
+        }
+
         private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
         
     }
