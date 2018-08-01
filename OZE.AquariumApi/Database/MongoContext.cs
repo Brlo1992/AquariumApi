@@ -48,7 +48,23 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public Task<Response<T>> GetSingle<T>(int id) => throw new System.NotImplementedException();
+        public async Task<Response<T>> GetSingle<T>(int id) {
+            var response = new Response<T>();
+
+            var builder = Builders<T>.Filter;
+            var filter = builder.Eq("id", id);
+
+            try {
+                var result = await GetCollection<T>().FindAsync<T>(filter);
+                response.Content = await result.FirstAsync();
+            }
+            catch (System.Exception ex) {
+                response.AddError(ex.Message);
+            }
+
+            return response;
+        }
+
         public Task<Response> Remove(int id) => throw new System.NotImplementedException();
         public Task<Response> Update<T>(T item) => throw new System.NotImplementedException();
         private IMongoCollection<T> GetCollection<T>() => client.GetDatabase(database).GetCollection<T>(collection);
