@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nelibur.ObjectMapper;
+
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.ViewModels;
@@ -30,7 +30,7 @@ namespace OZE.AquariumApi.Services {
             response.Fetch(result);
 
             if (response.IsValid)
-                response.Content =  result.Content.Select(item => TinyMapper.Map<ScheduledTaskViewModel>(item)).ToList();
+                response.Content =  result.Content.Select(scheduledTask => new ScheduledTaskViewModel(scheduledTask)).ToList();
 
             return response;
         }

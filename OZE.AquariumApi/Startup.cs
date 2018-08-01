@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.DataSeed;
 using OZE.AquariumApi.HttpFactories;
-using OZE.AquariumApi.Mapper;
 using OZE.AquariumApi.Services;
 
 namespace OZE.AquariumApi {
@@ -53,6 +52,7 @@ namespace OZE.AquariumApi {
                 app.UseHsts();
             }
 
+            var seed = serviceProvider.GetService<MongoSeed>();
             seed.SeedData();
 
             app.UseCors("any");
