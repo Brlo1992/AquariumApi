@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-
+using Nelibur.ObjectMapper;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.ViewModels;
@@ -17,13 +18,21 @@ namespace OZE.AquariumApi.Services {
             var response = new Response();
             var result = await databaseContext.Add(scheduledTask);
 
-            response.FetchData(result);
+            response.Fetch(result);
 
             return response;
         }
 
         public async Task<Response<List<ScheduledTaskViewModel>>> GetAllAsync() {
-            return await databaseContext.GetAll<ScheduledTask>();
+            var response = new Response<List<ScheduledTaskViewModel>>();
+            var result = await databaseContext.GetAll<ScheduledTask>();
+
+            response.Fetch(result);
+
+            if (response.IsValid)
+                response.Content =  result.Content.Select(item => TinyMapper.Map<ScheduledTaskViewModel>(item)).ToList();
+
+            return response;
         }
     }
 }

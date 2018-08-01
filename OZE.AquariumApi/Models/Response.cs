@@ -16,12 +16,5 @@ namespace OZE.AquariumApi.Models {
 
     public class Response<T> : Response {
         public T Content { get; set; }
-        public void Fetch(Response<T> result) {
-            if (result.IsValid) 
-                Content = result.Content;
-            else 
-                foreach (var error in result.Errors) 
-                    AddError(error);
-        }
     }
 }
