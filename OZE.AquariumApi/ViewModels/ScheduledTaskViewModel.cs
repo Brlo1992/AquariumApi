@@ -21,7 +21,7 @@ namespace OZE.AquariumApi.ViewModels {
             this.Status = scheduledTask.Status;
             this.ExecutionTime = scheduledTask.ExecutionTime;
             this.LastExecutionTime = scheduledTask.LastExecutionTime;
-            this.UrlAction = scheduledTask.UrlAction
+            this.UrlAction = scheduledTask.UrlAction;
         }
     }
 }
