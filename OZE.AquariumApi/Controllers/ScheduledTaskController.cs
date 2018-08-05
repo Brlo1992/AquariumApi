@@ -23,6 +23,6 @@ namespace OZE.AquariumApi.Controllers {
 
         [HttpPost]
         [Route("add")]
-        public async Task<Response> AddScheduledTask(ScheduledTaskViewModel scheduledTask) => await scheduledTaskService.AddTaskAsync(scheduledTask);
+        public async Task<Response> AddScheduledTask([FromBody]ScheduledTaskViewModel scheduledTask) => await scheduledTaskService.AddTaskAsync(scheduledTask);
     }
 }
