@@ -5,7 +5,7 @@ using OZE.AquariumApi.Models;
 namespace OZE.AquariumApi.ViewModels {
     public class ScheduledTaskViewModel
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
         public DateTime ExecutionTime { get; set; }
@@ -17,6 +17,7 @@ namespace OZE.AquariumApi.ViewModels {
         }
 
         public ScheduledTaskViewModel(ScheduledTask scheduledTask) {
+            this.Id = scheduledTask._id.ToString();
             this.Name = scheduledTask.Name;
             this.Status = scheduledTask.Status;
             this.ExecutionTime = scheduledTask.ExecutionTime;

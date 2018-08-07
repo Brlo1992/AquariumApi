@@ -15,7 +15,8 @@ namespace OZE.AquariumApi.Models {
 
         }
 
-        public ScheduledTask(ScheduledTaskViewModel  scheduledTaskViewModel) { 
+        public ScheduledTask(ScheduledTaskViewModel  scheduledTaskViewModel) {
+            this._id = ObjectId.Parse(scheduledTaskViewModel.Id);
             this.Name = scheduledTaskViewModel.Name;
             this.Status = scheduledTaskViewModel.Status;
             this.ExecutionTime = scheduledTaskViewModel.ExecutionTime;
