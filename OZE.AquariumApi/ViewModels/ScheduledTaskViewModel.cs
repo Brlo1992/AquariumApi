@@ -1,9 +1,11 @@
 ﻿using System;
+using MongoDB.Bson;
 using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.ViewModels {
     public class ScheduledTaskViewModel
     {
+        public ObjectId Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
         public DateTime ExecutionTime { get; set; }
