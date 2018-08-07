@@ -110,7 +110,7 @@ namespace OZE.AquariumApi.Database {
             var parsedItem = item as ScheduledTask;
 
             var update = builder
-                            .Set("id", parsedItem.Id)
+                            //.Set("id", parsedItem.Id)
                             .Set("name", parsedItem.Name)
                             .Set("status", parsedItem.Status)
                             .Set("urlAction", parsedItem.UrlAction)

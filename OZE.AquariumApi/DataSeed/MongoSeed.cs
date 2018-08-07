@@ -16,7 +16,6 @@ namespace OZE.AquariumApi.DataSeed {
             if (IsEmpty().Result) {
 
                 var turnOnTask = new ScheduledTask {
-                    Id = 1,
                     Name = "TurnOn",
                     Status = "on",
                     ExecutionTime = DateTime.Now.AddHours(-14),
@@ -24,7 +23,6 @@ namespace OZE.AquariumApi.DataSeed {
                 };
                 
                 var turnOffTask = new ScheduledTask {
-                    Id = 2,
                     Name = "TurnOff",
                     Status = "off",
                     ExecutionTime = DateTime.Now.AddHours(-1),
