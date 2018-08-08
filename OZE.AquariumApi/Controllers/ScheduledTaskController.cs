@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,20 @@ namespace OZE.AquariumApi.Controllers {
         [Route("remove")]
         public async Task<Response<List<ScheduledTaskViewModel>>> RemoveScheduledTask([FromQuery]TaskIdViewModel viewModel) {
             await scheduledTaskService.RemoveTaskAsync(viewModel);
+
+            return await scheduledTaskService.GetAllAsync();
+        }
+
+        [HttpGet]
+        [Route("restart")]
+        public async Task<Response<List<ScheduledTaskViewModel>>> RestartScheduledTaskService() {
+            throw new NotImplementedException();          
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<Response<List<ScheduledTaskViewModel>>> UpdateScheduledTask([FromBody] ScheduledTaskViewModel updatedScheduledTask) {
+            await scheduledTaskService.UpdateTaskAsync(updatedScheduledTask);
 
             return await scheduledTaskService.GetAllAsync();
         }
