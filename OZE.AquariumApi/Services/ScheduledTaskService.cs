@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using MongoDB.Bson;
 using OZE.AquariumApi.Database;
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.ViewModels;
@@ -40,7 +41,16 @@ namespace OZE.AquariumApi.Services {
 
             var id = ExtractObjectIdFromViewModel(viewModel);
 
-            var result = await databaseContext.Remove<ScheduledTask>()
+            var result = await databaseContext.Remove<ScheduledTask>(id);
+        }
+
+        private ObjectId ExtractObjectIdFromViewModel(TaskIdViewModel viewModel) {
+            if (viewModel != null && string.IsNullOrWhiteSpace(viewModel.TaskId)) {
+
+            }
+            else {
+                throw new NullReferenceException();
+            }
         }
     }
 }
