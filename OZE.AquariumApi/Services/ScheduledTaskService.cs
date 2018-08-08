@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using OZE.AquariumApi.Database;
+using OZE.AquariumApi.Exceptions;
 using OZE.AquariumApi.Models;
 using OZE.AquariumApi.ViewModels;
 
@@ -45,12 +46,10 @@ namespace OZE.AquariumApi.Services {
         }
 
         private ObjectId ExtractObjectIdFromViewModel(TaskIdViewModel viewModel) {
-            if (viewModel != null && string.IsNullOrWhiteSpace(viewModel.TaskId)) {
-
-            }
-            else {
-                throw new NullReferenceException();
-            }
+            if (viewModel != null && string.IsNullOrWhiteSpace(viewModel.TaskId))
+                return ObjectId.Parse(viewModel.TaskId);
+            else
+                throw new ExtractObjectIdException();
         }
     }
 }
