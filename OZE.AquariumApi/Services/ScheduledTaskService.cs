@@ -38,11 +38,15 @@ namespace OZE.AquariumApi.Services {
         }
 
         public async Task<Response> RemoveTaskAsync(TaskIdViewModel viewModel) {
-            var response = new Response();
-
             var id = ExtractObjectIdFromViewModel(viewModel);
 
             return await databaseContext.Remove<ScheduledTask>(id);
+        }
+
+        public async Task<Response> UpdateTaskAsync(ScheduledTaskViewModel updatedScheduledTask) {
+            var updatedTask = new ScheduledTask(updatedScheduledTask);
+
+            return await databaseContext.Update(updatedTask, updatedTask._id);
         }
 
         private ObjectId ExtractObjectIdFromViewModel(TaskIdViewModel viewModel) {
