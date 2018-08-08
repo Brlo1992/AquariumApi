@@ -129,7 +129,7 @@ namespace OZE.AquariumApi.Database {
 
         private FilterDefinition<T> GetIdFilter<T>(ObjectId id) {
             var builder = Builders<T>.Filter;
-            var filter = builder.Eq("id", id);
+            var filter = builder.Eq("_id", id);
 
             return filter;
         }
