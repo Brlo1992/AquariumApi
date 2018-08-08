@@ -42,11 +42,11 @@ namespace OZE.AquariumApi.Services {
 
             var id = ExtractObjectIdFromViewModel(viewModel);
 
-            var result = await databaseContext.Remove<ScheduledTask>(id);
+            return await databaseContext.Remove<ScheduledTask>(id);
         }
 
         private ObjectId ExtractObjectIdFromViewModel(TaskIdViewModel viewModel) {
-            if (viewModel != null && string.IsNullOrWhiteSpace(viewModel.TaskId))
+            if (viewModel != null && string.IsNullOrWhiteSpace(viewModel.TaskId) == false)
                 return ObjectId.Parse(viewModel.TaskId);
             else
                 throw new ExtractObjectIdException();
