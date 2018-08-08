@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using OZE.AquariumApi.Models;
 
 namespace OZE.AquariumApi.Database {
@@ -8,6 +9,6 @@ namespace OZE.AquariumApi.Database {
         Task<Response<T>> GetSingle<T>(int id);
         Task<Response> Add<T>(T item);
         Task<Response> Update<T>(T item, int id);
-        Task<Response> Remove<T>(int id);
+        Task<Response> Remove<T>(ObjectId id);
     }
 }

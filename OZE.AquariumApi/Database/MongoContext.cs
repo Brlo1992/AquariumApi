@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 using OZE.AquariumApi.Models;
@@ -49,7 +50,7 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public async Task<Response<T>> GetSingle<T>(int id) {
+        public async Task<Response<T>> GetSingle<T>(ObjectId id) {
             var response = new Response<T>();
 
             var filter = GetIdFilter<T>(id);
@@ -66,7 +67,7 @@ namespace OZE.AquariumApi.Database {
         }
 
 
-        public async Task<Response> Remove<T>(int id) {
+        public async Task<Response> Remove<T>(ObjectId id) {
             var response = new Response();
 
             var exist = await DoExist<T>(id);
@@ -85,7 +86,7 @@ namespace OZE.AquariumApi.Database {
             return response;
         }
 
-        public async Task<Response> Update<T>(T item, int id) {
+        public async Task<Response> Update<T>(T item, ObjectId id) {
             var response = new Response();
 
             var exist = await DoExist<T>(id);
@@ -120,13 +121,13 @@ namespace OZE.AquariumApi.Database {
             return update;
         }
 
-        private async Task<bool> DoExist<T>(int id) {
+        private async Task<bool> DoExist<T>(ObjectId id) {
             var result = await GetSingle<T>(id);
 
             return result.Content != null;
         }
 
-        private FilterDefinition<T> GetIdFilter<T>(int id) {
+        private FilterDefinition<T> GetIdFilter<T>(ObjectId id) {
             var builder = Builders<T>.Filter;
             var filter = builder.Eq("id", id);
 
