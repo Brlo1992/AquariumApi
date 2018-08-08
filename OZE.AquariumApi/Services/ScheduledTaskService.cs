@@ -30,9 +30,17 @@ namespace OZE.AquariumApi.Services {
             response.Fetch(result);
 
             if (response.IsValid)
-                response.Content =  result.Content.Select(scheduledTask => new ScheduledTaskViewModel(scheduledTask)).ToList();
+                response.Content = result.Content.Select(scheduledTask => new ScheduledTaskViewModel(scheduledTask)).ToList();
 
             return response;
+        }
+
+        public async Task<Response> RemoveTaskAsync(TaskIdViewModel viewModel) {
+            var response = new Response();
+
+            var id = ExtractObjectIdFromViewModel(viewModel);
+
+            var result = await databaseContext.Remove<ScheduledTask>()
         }
     }
 }

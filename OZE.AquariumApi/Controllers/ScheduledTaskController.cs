@@ -31,8 +31,8 @@ namespace OZE.AquariumApi.Controllers {
 
         [HttpGet]
         [Route("remove")]
-        public async Task<Response<List<ScheduledTaskViewModel>>> RemoveScheduledTask([FromQuery]TaskIdViewModel taskId) {
-            await scheduledTaskService.RemoveTaskAsync(taskId);
+        public async Task<Response<List<ScheduledTaskViewModel>>> RemoveScheduledTask([FromQuery]TaskIdViewModel viewModel) {
+            await scheduledTaskService.RemoveTaskAsync(viewModel);
 
             return await scheduledTaskService.GetAllAsync();
         }

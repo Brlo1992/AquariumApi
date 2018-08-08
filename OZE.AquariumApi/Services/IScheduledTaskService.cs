@@ -8,6 +8,6 @@ namespace OZE.AquariumApi.Services {
     public interface IScheduledTaskService {
         Task<Response<List<ScheduledTaskViewModel>>> GetAllAsync();
         Task<Response> AddTaskAsync(ScheduledTaskViewModel scheduledTaskViewModel);
-        Task RemoveTaskAsync(TaskIdViewModel viewModel);
+        Task<Response> RemoveTaskAsync(TaskIdViewModel viewModel);
     }
 }
