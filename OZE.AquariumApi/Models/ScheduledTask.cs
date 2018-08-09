@@ -15,12 +15,14 @@ namespace OZE.AquariumApi.Models {
 
         }
 
-        public ScheduledTask(ScheduledTaskViewModel  scheduledTaskViewModel) {
-            this._id = ObjectId.Parse(scheduledTaskViewModel.Id);
-            this.Name = scheduledTaskViewModel.Name;
-            this.Status = scheduledTaskViewModel.Status;
-            this.ExecutionTime = scheduledTaskViewModel.ExecutionTime;
-            this.LastExecutionTime = scheduledTaskViewModel.LastExecutionTime;
+        public ScheduledTask(ScheduledTaskViewModel scheduledTaskViewModel, bool parseId = true) {
+            if (parseId)
+                _id = ObjectId.Parse(scheduledTaskViewModel.Id);
+
+            Name = scheduledTaskViewModel.Name;
+            Status = scheduledTaskViewModel.Status;
+            ExecutionTime = scheduledTaskViewModel.ExecutionTime;
+            LastExecutionTime = scheduledTaskViewModel.LastExecutionTime;
         }
     }
 }

@@ -16,9 +16,9 @@ namespace OZE.AquariumApi.Services {
             this.databaseContext = databaseContext;
         }
 
-        public async Task<Response> AddTaskAsync(ScheduledTaskViewModel scheduledTask) {
+        public async Task<Response> AddTaskAsync(ScheduledTaskViewModel scheduledTaskViewModel) {
             var response = new Response();
-            var result = await databaseContext.Add(scheduledTask);
+            var result = await databaseContext.Add(new ScheduledTask(scheduledTaskViewModel));
 
             response.Fetch(result);
 
