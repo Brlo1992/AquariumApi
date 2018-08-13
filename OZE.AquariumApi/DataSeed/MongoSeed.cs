@@ -18,6 +18,8 @@ namespace OZE.AquariumApi.DataSeed {
                 var turnOnTask = new ScheduledTask {
                     Name = "TurnOn",
                     Status = "on",
+                    Action = "turnOn",
+                    Uri = "http://192.168.8.133",
                     ExecutionTime = DateTime.Now.AddHours(-14),
                     LastExecutionTime = DateTime.Now.AddHours(-14)
                 };
@@ -25,6 +27,8 @@ namespace OZE.AquariumApi.DataSeed {
                 var turnOffTask = new ScheduledTask {
                     Name = "TurnOff",
                     Status = "off",
+                    Action = "turnOff",
+                    Uri = "http://192.168.8.133",
                     ExecutionTime = DateTime.Now.AddHours(-1),
                     LastExecutionTime = DateTime.Now.AddHours(-1)
                 };

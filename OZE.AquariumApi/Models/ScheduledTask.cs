@@ -9,7 +9,8 @@ namespace OZE.AquariumApi.Models {
         public string Status { get; set; }
         public DateTime ExecutionTime { get; set; }
         public DateTime? LastExecutionTime { get; set; }
-        public string UrlAction { get; internal set; }
+        public string Action { get; internal set; }
+        public string Uri { get; set; }
 
         public ScheduledTask() {
 
@@ -23,6 +24,7 @@ namespace OZE.AquariumApi.Models {
             Status = scheduledTaskViewModel.Status;
             ExecutionTime = scheduledTaskViewModel.ExecutionTime;
             LastExecutionTime = scheduledTaskViewModel.LastExecutionTime;
+            Action = scheduledTaskViewModel.Action;
         }
     }
 }
