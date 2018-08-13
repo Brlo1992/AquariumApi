@@ -114,7 +114,8 @@ namespace OZE.AquariumApi.Database {
                             //.Set("id", parsedItem.Id)
                             .Set("name", parsedItem.Name)
                             .Set("status", parsedItem.Status)
-                            .Set("urlAction", parsedItem.UrlAction)
+                            .Set("uri", parsedItem.Uri)
+                            .Set("action", parsedItem.Action)
                             .Set("executionTime", parsedItem.ExecutionTime)
                             .Set("lastExecutionTime", parsedItem.LastExecutionTime);
 
